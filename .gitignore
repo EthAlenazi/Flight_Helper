@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Flight_Helper/WebAPI/obj
+/Flight_Helper/.vs/Flight_Helper/FileContentIndex
+/Flight_Helper/.vs/Flight_Helper/v17
+/Flight_Helper/.vs
+/.vs
