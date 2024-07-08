@@ -4,7 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using WebAPI.Data;
+using WebAPI.Entities;
 using WebAPI.Models;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
@@ -13,15 +15,17 @@ namespace WebAPI.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-     
-        public AuthenticationController(IConfiguration configuration)
+        private readonly IUserServices _user;
+
+        public AuthenticationController(IConfiguration configuration, IUserServices user )
         {
             _configuration = configuration;
+            _user = user;
         }
         [HttpPost("authenticate")]
-        public ActionResult<string> Authenticate(AuthenticationModel authenticateRequestBody)
+        public async Task< ActionResult<string>> Authenticate(AuthenticationModel authenticateRequestBody)
         {
-            var user = ValidateUserCredentials(
+            var user = await _user.ValidateUserCredentials(
             authenticateRequestBody.UserName,
             authenticateRequestBody.Password);
 
@@ -53,14 +57,12 @@ namespace WebAPI.Controllers
             return Ok(tokenToReturn);
 
         }
-
-        private IdentityUser ValidateUserCredentials(string userName, string password)
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateUser(AuthenticationModel model)
         {
-            //Get Data From DB 
-            return new AdminUser();
-              
-
+           var result = await _user.CreateUser(model);
+return Ok(result);
         }
-
+        
     }
 }

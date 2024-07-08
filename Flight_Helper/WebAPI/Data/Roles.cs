@@ -21,7 +21,7 @@ namespace WebAPI.Data
     }
 
     public enum AdminRoleType
-    {
+    {None,
         FullAccess,
         ReadOnly
     }

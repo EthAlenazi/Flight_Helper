@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using WebAPI.Data;
+using WebAPI.Entities;
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +13,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+var connectionString = builder.Configuration.GetConnectionString("Connection");
+builder.Services.AddDbContext<FlightHelperDBContext>(options =>
+    options.UseSqlServer(connectionString));
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
     {
@@ -22,7 +31,8 @@ builder.Services.AddAuthentication("Bearer")
         };
     }
     );
-
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IUserServices, UserServices>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
