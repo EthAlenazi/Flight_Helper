@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
             _configuration = configuration;
             _user = user;
         }
-        [HttpPost("authenticate")]
+        [HttpPost("LogIn")]
         public async Task< ActionResult<string>> Authenticate(AuthenticationModel authenticateRequestBody)
         {
             var user = await _user.ValidateUserCredentials(
@@ -39,9 +39,9 @@ namespace WebAPI.Controllers
                 securityKey, SecurityAlgorithms.HmacSha256);
 
             var claimsForToken = new List<Claim>();
-            claimsForToken.Add(new Claim("sub", user.UserName.ToString()));
-            claimsForToken.Add(new Claim("given_name", user.PhoneNumber));
-            claimsForToken.Add(new Claim("family_name", user.Email));
+            claimsForToken.Add(new Claim("sub", user.UserName));
+            claimsForToken.Add(new Claim("PhoneNumber", user.PhoneNumber));
+            claimsForToken.Add(new Claim("Email", user.Email));
 
             var jwtSecurityToken = new JwtSecurityToken(
                 _configuration["Authentication:Issuer"],
@@ -57,7 +57,7 @@ namespace WebAPI.Controllers
             return Ok(tokenToReturn);
 
         }
-        [HttpPost]
+        [HttpPost("CreateUser")]
         public async Task<ActionResult<bool>> CreateUser(AuthenticationModel model)
         {
            var result = await _user.CreateUser(model);

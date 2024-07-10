@@ -14,7 +14,8 @@ namespace WebAPI.Entities
 
         public async Task<IdentityUser> GetUserAsync(string userName, string Pass)
         {
-            return await _dbContext.customers.FirstOrDefaultAsync(u => (u.UserName == userName)&&(u.PasswordHash==Pass));
+            Customer user = await _dbContext.customers.FirstOrDefaultAsync(u => (u.UserName == userName)&&(u.PasswordHash==Pass));
+            return user; 
         }
 
     }

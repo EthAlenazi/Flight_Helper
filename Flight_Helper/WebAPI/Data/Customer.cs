@@ -18,7 +18,7 @@ namespace WebAPI.Data
 
         [Required]
         [RegularExpression("^\\+\\d{1,3}\\d{9}$",ErrorMessage =" Enter valid phone as +966 500000000")]
-        public string PhoneNumber { get; set; }
+        public override string PhoneNumber { get; set; }
 
         [Required]
         public Gender Gender { get; set; } 
