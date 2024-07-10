@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,6 +13,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
+    [ApiVersion(1)] //This for versioning All API inside controller
     public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -41,7 +43,6 @@ namespace WebAPI.Controllers
             var claimsForToken = new List<Claim>();
             claimsForToken.Add(new Claim("sub", user.UserName));
             claimsForToken.Add(new Claim("PhoneNumber", user.PhoneNumber));
-            claimsForToken.Add(new Claim("Email", user.Email));
 
             var jwtSecurityToken = new JwtSecurityToken(
                 _configuration["Authentication:Issuer"],
