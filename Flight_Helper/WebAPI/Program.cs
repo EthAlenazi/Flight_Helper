@@ -9,43 +9,9 @@ using WebAPI.Entities;
 using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddApiVersioning(setupAction =>
-{
-    setupAction.ReportApiVersions = true;
-    setupAction.AssumeDefaultVersionWhenUnspecified = true;
-    setupAction.DefaultApiVersion = new ApiVersion(1, 0);
-}).AddMvc().AddApiExplorer(setupAction =>
-{
-    setupAction.SubstituteApiVersionInUrl = true;
-});
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();//for swager
 
-//builder.Services.AddSwaggerGen(setupAction =>
-//{
-//    foreach (var description in
-//    apiVersionDescriptionProvider.ApiVersionDescriptions)
-//    {
-//        setupAction.SwaggerDoc(//This is for documentation an API
-//            $"{description.GroupName}",
-//            new()
-//            {
-//                Title = "CityInfo API",
-//                Version = description.ApiVersion.ToString(),
-//                Description = "Through this API you can access cities and their points of interest."
-//            });
-
-//    }
-
-//    var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-//    var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
-
-//    setupAction.IncludeXmlComments(xmlCommentsFullPath);
-
-//});//for swager
 
 var connectionString = builder.Configuration.GetConnectionString("Connection");
 builder.Services.AddDbContext<FlightHelperDBContext>(options =>
@@ -65,9 +31,22 @@ builder.Services.AddAuthentication("Bearer")
         };
     }
     );
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-builder.Services.AddScoped<IUserServices, UserServices>();
 
+
+
+#region swagger and versioning
+builder.Services.AddApiVersioning(setupAction =>
+{
+    setupAction.ReportApiVersions = true;
+    setupAction.AssumeDefaultVersionWhenUnspecified = true;
+    setupAction.DefaultApiVersion = new ApiVersion(1, 0);
+}).AddMvc() //this for allow versioning in porject
+.AddApiExplorer(setupAction =>
+{
+    setupAction.SubstituteApiVersionInUrl = true;
+});//this for showing versioning in swagger
+
+builder.Services.AddEndpointsApiExplorer();//for swager
 var apiVersionDescriptionProvider = builder.Services.BuildServiceProvider()//to allow versioning in swagger UI
   .GetRequiredService<IApiVersionDescriptionProvider>();
 
@@ -89,9 +68,19 @@ builder.Services.AddSwaggerGen(
 
     }
     );
+#endregion
+
+
+
+
+
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IUserServices, UserServices>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+#region swagger in app as middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();  //for swager
@@ -108,10 +97,10 @@ if (app.Environment.IsDevelopment())
               
           });//for swager
 }
+#endregion
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
