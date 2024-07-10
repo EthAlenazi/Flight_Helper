@@ -1,25 +1,22 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using WebAPI.Data;
-using WebAPI.Entities;
 using WebAPI.Models;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/authentication/{Controller}")]
+    [Route("api/authentication")]
     [ApiController]
-    [ApiVersion(3)] //This for versioning All API inside controller
-    public class AuthenticationController : ControllerBase
+    [ApiVersion(2)] //This for versioning All API inside controller
+    public class AuthenticationController_ : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IUserServices _user;
 
-        public AuthenticationController(IConfiguration configuration, IUserServices user )
+        public AuthenticationController_(IConfiguration configuration, IUserServices user )
         {
             _configuration = configuration;
             _user = user;
@@ -62,8 +59,8 @@ namespace WebAPI.Controllers
         [HttpPost("CreateUser")]
         public async Task<ActionResult<bool>> CreateUser(AuthenticationModel model)
         {
-           var result = await _user.CreateUser(model);
-return Ok(result);
+            var result = await _user.CreateUser(model);
+            return Ok(result);
         }
         
     }
