@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using WebAPI.Data;
+using WebAPI.DTO.Create;
 using WebAPI.Entities;
 using WebAPI.Models;
 using WebAPI.Services;
@@ -16,55 +17,42 @@ namespace WebAPI.Controllers
     [ApiVersion(3)] //This for versioning All API inside controller
     public class AuthenticationController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IUserServices _user;
 
-        public AuthenticationController(IConfiguration configuration, IUserServices user )
+        public AuthenticationController(IConfiguration configuration, IUserServices user)
         {
-            _configuration = configuration;
             _user = user;
         }
         [HttpPost("LogIn")]
         [ApiVersion(0.1, Deprecated = true)]//To inform user this version will expired
-        public async Task< ActionResult<string>> Authenticate(AuthenticationModel authenticateRequestBody)
+        public async Task<ActionResult<string>> Authenticate(AuthenticationModel model)
         {
-            var user = await _user.ValidateUserCredentials(
-            authenticateRequestBody.UserName,
-            authenticateRequestBody.Password);
-
-            if (user == null)
+            try
             {
-                return Unauthorized();
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+                var user = await _user.ValidateUserCredentials(model.UserName, model.Password);
+                if (!user)
+                {
+                    return Unauthorized();
+                }
+                var token = _user.GenerateToken(model);
+                return Ok(token);
             }
-            var securityKey = new SymmetricSecurityKey(
-                Convert.FromBase64String(_configuration["Authentication:SecretForKey"]));
-            var signingCredentials = new SigningCredentials(
-                securityKey, SecurityAlgorithms.HmacSha256);
-
-            var claimsForToken = new List<Claim>();
-            claimsForToken.Add(new Claim("sub", user.UserName));
-            claimsForToken.Add(new Claim("PhoneNumber", user.PhoneNumber));
-
-            var jwtSecurityToken = new JwtSecurityToken(
-                _configuration["Authentication:Issuer"],
-                _configuration["Authentication:Audience"],
-                claimsForToken,
-                DateTime.UtcNow,
-                DateTime.UtcNow.AddHours(1),
-                signingCredentials);
-
-            var tokenToReturn = new JwtSecurityTokenHandler()
-               .WriteToken(jwtSecurityToken);
-
-            return Ok(tokenToReturn);
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
         [HttpPost("CreateUser")]
-        public async Task<ActionResult<bool>> CreateUser(AuthenticationModel model)
+        public async Task<ActionResult<bool>> CreateUser(UserCreateDTO model)
         {
-           var result = await _user.CreateUser(model);
-return Ok(result);
+            var result = await _user.CreateUser(model);
+            return Ok(result);
         }
-        
+
     }
 }

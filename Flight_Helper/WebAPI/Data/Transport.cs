@@ -27,7 +27,7 @@ namespace WebAPI.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TransportID { get; set; }
         public int TripID { get; set; }
-        public Type Type { get; set; } // e.g., Flight, Train, Car Rental
+        public TransportType Type { get; set; } // e.g., Flight, Train, Car Rental
         public string DepartureLocation { get; set; }
         public string ArrivalLocation { get; set; }
         public DateTime DepartureDateTime { get; set; }
@@ -37,7 +37,7 @@ namespace WebAPI.Data
         // Navigation property
         public Trip Trip { get; set; }
     }
-    public enum Type
+    public enum TransportType
     {
         CarRental,
         Flight,

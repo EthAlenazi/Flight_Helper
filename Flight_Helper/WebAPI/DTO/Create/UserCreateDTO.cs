@@ -17,11 +17,11 @@ namespace WebAPI.DTO.Create
         [EmailAddress]
         public string Email { get; set; }
 
+        //[Required]
+        //[AllowedValues(typeof(Role))]
+        public Role Role { get; set; }
         [Required]
-        [AllowedValues(1, 2, 3)]
-        public string Role { get; set; }
-        [Required]
-        [AllowedValues(0, 1)]
+        //[AllowedValues(0, 1)]
         public Gender Gender { get; set; }
 
         [Required]

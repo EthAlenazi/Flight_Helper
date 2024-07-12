@@ -27,7 +27,8 @@ builder.Services.AddAuthentication("Bearer")
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Authentication:Issuer"],
             ValidAudience = builder.Configuration["Authentication:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(builder.Configuration["Authentication:SecretForKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(
+                builder.Configuration["Authentication:SecretForKey"]))
         };
     }
     );
