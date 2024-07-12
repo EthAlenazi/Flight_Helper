@@ -34,12 +34,7 @@ namespace WebAPI.Controllers
                     return BadRequest();
                 }
                 var user = await _user.ValidateUserCredentials(model.UserName, model.Password);
-                if (!user)
-                {
-                    return Unauthorized();
-                }
-                var token = _user.GenerateToken(model);
-                return Ok(token);
+                return Ok(user);
             }
             catch (Exception ex)
             {

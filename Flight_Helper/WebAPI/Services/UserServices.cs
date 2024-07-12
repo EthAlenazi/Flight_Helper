@@ -18,12 +18,13 @@ namespace WebAPI.Services
             _user = user;
             _configuration = configuration;
         }
-        public async Task<bool> ValidateUserCredentials(string userName, string password)
+        public async Task<string> ValidateUserCredentials(string userName, string password)
         {
-            var user = await _user.GetUserAsync(userName, password);
+            User user = await _user.GetUserAsync(userName, password);
             if (user == null)
-                return false;
-            return true;
+                return "User Not Found!";
+           var token=  GenerateToken(user);
+            return token;
 
         }
         public async Task<IdentityUser> GetTokenuser(string userName, string password)
@@ -47,19 +48,18 @@ namespace WebAPI.Services
             return true;
         }
 
-        public string GenerateToken(AuthenticationModel model)
+        public string GenerateToken(User model)
         {
             try
             {
-                var user = GetTokenuser(model.UserName, model.Password);
                 var securityKey = new SymmetricSecurityKey(
                     Convert.FromBase64String(_configuration["Authentication:SecretForKey"]));
                 var signingCredentials = new SigningCredentials(
                     securityKey, SecurityAlgorithms.HmacSha256);
 
                 var claimsForToken = new List<Claim>();
-                claimsForToken.Add(new Claim("sub", user.Result.UserName));
-                claimsForToken.Add(new Claim("PhoneNumber", user.Result.PhoneNumber));
+                claimsForToken.Add(new Claim("sub", model.UserName));
+                claimsForToken.Add(new Claim("PhoneNumber", model.PhoneNumber));
 
                 var jwtSecurityToken = new JwtSecurityToken(
                     _configuration["Authentication:Issuer"],

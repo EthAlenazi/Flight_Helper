@@ -6,9 +6,9 @@ namespace WebAPI.Services
 {
     public interface IUserServices
     {
-       Task<bool> ValidateUserCredentials(string userName, string password);
+       Task<string> ValidateUserCredentials(string userName, string password);
        //Task<bool>CreateUser(AuthenticationModel model);
-       string GenerateToken(AuthenticationModel model);
+       //string GenerateToken(AuthenticationModel model);
        Task<bool> CreateUser(UserCreateDTO model);
     }
 }
