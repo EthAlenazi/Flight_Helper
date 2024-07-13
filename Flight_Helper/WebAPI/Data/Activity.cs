@@ -31,7 +31,7 @@ namespace WebAPI.Data
 
         // Navigation property 
         public Trip Trip { get; set; }
-        public ActivityTpye ActivityTpye { get; set; }  
+        public ActivityType ActivityTpye { get; set; }  
 
     }
     

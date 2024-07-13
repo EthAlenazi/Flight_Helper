@@ -21,7 +21,7 @@ namespace WebAPI.Data
     /// };
     /// </code>
     /// </example>
-    public class ActivityTpye
+    public class ActivityType
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

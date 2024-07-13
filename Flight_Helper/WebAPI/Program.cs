@@ -6,6 +6,8 @@ using System;
 using System.Reflection;
 using WebAPI.Data;
 using WebAPI.Entities;
+using WebAPI.Repository.Implementation;
+using WebAPI.Repository.Interface;
 using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,7 +77,10 @@ builder.Services.AddSwaggerGen(
 
 
 
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();

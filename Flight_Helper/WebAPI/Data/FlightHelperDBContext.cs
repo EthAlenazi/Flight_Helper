@@ -13,7 +13,7 @@ namespace WebAPI.Data
         public DbSet<Accommodation> Accommodations { get; set; }
         public DbSet<AccommodationType> AccommodationType { get; set; }
         public DbSet<Activity> Activities { get; set; }
-        public DbSet<ActivityTpye> ActivityType { get; set; }
+        public DbSet<ActivityType> ActivityType { get; set; }
         public DbSet<Companion> Companions { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Transport> Transports { get; set; }

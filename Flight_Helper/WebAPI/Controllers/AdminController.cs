@@ -3,12 +3,18 @@ using WebAPI.Data;
 using WebAPI.DTO;
 using WebAPI.DTO.Create;
 using WebAPI.DTO.Create.Admin;
+using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
     [Route("api/Admin")]
     public class AdminController : Controller
-    {
+    {private readonly IActivityTypeService _activityTypeService;
+        public AdminController(IActivityTypeService activityTypeService)
+        {
+            _activityTypeService = activityTypeService;
+            
+        }
         [HttpPost]
         [Route("GetUsersDetails")]
         public IActionResult GetUsersDetails()
@@ -29,7 +35,7 @@ namespace WebAPI.Controllers
         }
         [HttpPost]
         [Route("AddTransportType")]
-        public IActionResult AddTransportType(ActivityTypeCreateDTO activityType)
+        public IActionResult AddTransportType(ActivityTypeDTO activityType)
         {
             return View();
         }
@@ -39,11 +45,36 @@ namespace WebAPI.Controllers
         {
             return View();
         }
+
+        #region Activity
         [HttpPost]
-        [Route("AddAccommodationType")]
-        public IActionResult AddActivityType(ActivityTypeCreateDTO activityType)
+        [Route("AddActivityType")]
+        public IActionResult AddActivityType(ActivityTypeDTO activityType)
         {
+            _activityTypeService.AddActivityTypeAsync(activityType);
             return View();
         }
+        [HttpPost]
+        [Route("UpdateActivityType")]
+        public IActionResult UpdateActivityType(ActivityTypeDTO activityType)
+        {
+            _activityTypeService.UpdateActivityTypeAsync(activityType);
+            return View();
+        }
+        [HttpPost]
+        [Route("RemoveActivityType")]
+        public IActionResult RemoveActivityType(ActivityTypeDTO activityType)
+        {
+            _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
+            return View();
+        }
+        [HttpPost]
+        [Route("GetAllActivityType")]
+        public IActionResult GetAllActivityType()
+        {
+            _activityTypeService.GetAllActivityTypesAsync();
+            return View();
+        }
+        #endregion
     }
 }
