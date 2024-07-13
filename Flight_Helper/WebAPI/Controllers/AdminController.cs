@@ -51,8 +51,8 @@ namespace WebAPI.Controllers
         [Route("AddActivityType")]
         public IActionResult AddActivityType(ActivityTypeDTO activityType)
         {
-            _activityTypeService.AddActivityTypeAsync(activityType);
-            return View();
+          var Data=  _activityTypeService.AddActivityTypeAsync(activityType);
+            return Ok("Activity type added");
         }
         [HttpPost]
         [Route("UpdateActivityType")]
