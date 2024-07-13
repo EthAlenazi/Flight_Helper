@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using WebAPI.Data;
 
-namespace WebAPI.DTO
+namespace WebAPI.DTO.Create.Admin
 {
-    public class ActivityCreateDTO
+    public class ActivityTypeCreateDTO
     {
-        [Required]
-        public int TripID { get; set; }
-
         [Required]
         [StringLength(100)]
         public string Name { get; set; }

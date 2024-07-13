@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         }
         [HttpPost("LogIn")]
         //[ApiVersion(0.1, Deprecated = true)]//To inform user this version will expired
-        public async Task<ActionResult<string>> Authenticate(AuthenticationModel model)
+        public async Task<ActionResult<string>> Authenticate(AuthenticationDTO model)
         {
             try
             {
