@@ -24,14 +24,15 @@ namespace WebAPI.Data
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ActivityID { get; set; }
+        public int ActivityTypeID { get; set; }
         public int TripID { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Note { get; set; }
         public DateTime DateTime { get; set; }
-        public decimal Cost { get; set; }
 
-        // Navigation property
+        // Navigation property 
         public Trip Trip { get; set; }
+        public ActivityTpye ActivityTpye { get; set; }  
 
     }
+    
 }
