@@ -12,11 +12,13 @@ namespace WebAPI.Controllers
     {
     private readonly IActivityTypeService _activityTypeService;
     private readonly ITransportTypeService _transportTypeService;
-        public AdminController(IActivityTypeService activityTypeService, ITransportTypeService transportTypeService)
+        private readonly IAccommodationTypeService _accommodationTypeService;
+        public AdminController(IActivityTypeService activityTypeService, ITransportTypeService transportTypeService
+            , IAccommodationTypeService accommodationTypeService)
         {
             _activityTypeService = activityTypeService;
             _transportTypeService = transportTypeService;
-            
+            _accommodationTypeService = accommodationTypeService;
         }
         [HttpPost]
         [Route("GetUsersDetails")]
@@ -36,13 +38,43 @@ namespace WebAPI.Controllers
         {
             return View();
         }
+        #region Accommodation
         [HttpPost]
         [Route("AddAccommodationType")]
-        public IActionResult AddAccommodationType(AccommodationDTO accommodationType)
+        public IActionResult AddAccommodationType(AccommodationTypeDTO activityType)
         {
-            return View();
+            var Data = _accommodationTypeService.AddAccommodationTypeAsync(activityType);
+            return Ok("Accommodation type added");
         }
-
+        [HttpPost]
+        [Route("UpdateAccommodationType")]
+        public IActionResult UpdateAccommodationType(AccommodationTypeDTO activityType)
+        {
+            var result = _accommodationTypeService.UpdateAccommodationTypeAsync(activityType);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("RemoveAccommodationType")]
+        public IActionResult RemoveAccommodationType(AccommodationTypeDTO activityType)
+        {
+            var result = _accommodationTypeService.DeleteAccommodationTypeAsync(activityType.Id);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("GetAllAccommodationTypes")]
+        public IActionResult GetAllAccommodationTypes()
+        {
+            var result = _accommodationTypeService.GetAllAccommodationTypesAsync();
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("GetAccommodationTypesById")]
+        public IActionResult GetAccommodationTypesById(int Id)
+        {
+            var result = _accommodationTypeService.GetAccommodationTypeByIdAsync(Id);
+            return Ok(result);
+        }
+        #endregion
         #region Transport
         [HttpPost]
         [Route("AddTransportType")]
@@ -80,7 +112,6 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         #endregion
-
         #region Activity
         [HttpPost]
         [Route("AddActivityType")]
