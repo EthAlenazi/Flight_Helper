@@ -81,6 +81,8 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
+builder.Services.AddScoped<ITransportTypeService, TransportTypeService>();
+builder.Services.AddScoped<IAccommodationTypeService, AccommodationTypeService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 
 var app = builder.Build();
