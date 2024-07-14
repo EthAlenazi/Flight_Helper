@@ -3,7 +3,7 @@ using WebAPI.Data;
 
 namespace WebAPI.DTO
 {
-    public class TransportCreateDTO
+    public class TransportDTO
     {
         [Required]
         public int TripID { get; set; }

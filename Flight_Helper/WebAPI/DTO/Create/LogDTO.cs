@@ -3,7 +3,7 @@ using WebAPI.Data;
 
 namespace WebAPI.DTO
 {
-    public class LogCreateDTO
+    public class LogDTO
     {
         [Required]
         [DataType(DataType.DateTime)]

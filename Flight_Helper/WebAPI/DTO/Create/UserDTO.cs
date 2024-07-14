@@ -3,7 +3,7 @@ using WebAPI.Data;
 
 namespace WebAPI.DTO.Create
 {
-    public class UserCreateDTO
+    public class UserDTO
     {
         [Required]
         [StringLength(50, MinimumLength = 10)]

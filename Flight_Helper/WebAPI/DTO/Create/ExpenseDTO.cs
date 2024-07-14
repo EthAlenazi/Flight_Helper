@@ -3,7 +3,7 @@ using WebAPI.Data;
 
 namespace WebAPI.DTO
 {
-    public class ExpenseCreateDTO
+    public class ExpenseDTO
     {
         [Required]
         public int TripID { get; set; }
