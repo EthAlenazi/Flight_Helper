@@ -64,7 +64,8 @@ namespace WebAPI.Services
             }
 
             entity.Name = activityTypeDTO.Name;
-            // Update other properties as needed
+            entity.Cost = activityTypeDTO.Cost;
+            entity.Description = activityTypeDTO.Description;
 
             _activityTypeRepository.Update(entity);
             await _activityTypeRepository.SaveChangesAsync();

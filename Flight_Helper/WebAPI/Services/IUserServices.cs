@@ -9,6 +9,6 @@ namespace WebAPI.Services
        Task<string> ValidateUserCredentials(string userName, string password);
        //Task<bool>CreateUser(AuthenticationModel model);
        //string GenerateToken(AuthenticationModel model);
-       Task<bool> CreateUser(UserCreateDTO model);
+       Task<bool> CreateUser(UserDTO model);
     }
 }

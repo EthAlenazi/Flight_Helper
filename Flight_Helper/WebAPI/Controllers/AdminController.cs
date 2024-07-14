@@ -9,10 +9,13 @@ namespace WebAPI.Controllers
 {
     [Route("api/Admin")]
     public class AdminController : Controller
-    {private readonly IActivityTypeService _activityTypeService;
-        public AdminController(IActivityTypeService activityTypeService)
+    {
+    private readonly IActivityTypeService _activityTypeService;
+    private readonly ITransportTypeService _transportTypeService;
+        public AdminController(IActivityTypeService activityTypeService, ITransportTypeService transportTypeService)
         {
             _activityTypeService = activityTypeService;
+            _transportTypeService = transportTypeService;
             
         }
         [HttpPost]
@@ -23,7 +26,7 @@ namespace WebAPI.Controllers
         }
         [HttpPost]
         [Route("UpdateUserDetails")]
-        public IActionResult UpdateUserDetails(UserCreateDTO userCreate)
+        public IActionResult UpdateUserDetails(UserDTO userCreate)
         {
             return View();
         }
@@ -34,17 +37,49 @@ namespace WebAPI.Controllers
             return View();
         }
         [HttpPost]
-        [Route("AddTransportType")]
-        public IActionResult AddTransportType(ActivityTypeDTO activityType)
+        [Route("AddAccommodationType")]
+        public IActionResult AddAccommodationType(AccommodationDTO accommodationType)
         {
             return View();
+        }
+
+        #region Transport
+        [HttpPost]
+        [Route("AddTransportType")]
+        public IActionResult AddTransportType(TransportTypeDTO activityType)
+        {
+            var Data = _transportTypeService.AddTransportTypeAsync(activityType);
+            return Ok("Transport type added");
         }
         [HttpPost]
-        [Route("AddAccommodationType")]
-        public IActionResult AddAccommodationType(AccommodationCreateDTO accommodationType)
+        [Route("UpdateTransportType")]
+        public IActionResult UpdateTransportType(TransportTypeDTO activityType)
         {
-            return View();
+            var result = _transportTypeService.UpdateTransportTypeAsync(activityType);
+            return Ok(result);
         }
+        [HttpPost]
+        [Route("RemoveTransportType")]
+        public IActionResult RemoveTransportType(TransportTypeDTO activityType)
+        {
+            var result = _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("GetAllTransportTypes")]
+        public IActionResult GetAllTransportTypes()
+        {
+            var result = _transportTypeService.GetAllTransportTypesAsync();
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("GetTransportTypesById")]
+        public IActionResult GetTransportTypesById(int Id)
+        {
+            var result = _transportTypeService.GetTransportTypeByIdAsync(Id);
+            return Ok(result);
+        }
+        #endregion
 
         #region Activity
         [HttpPost]
@@ -58,22 +93,29 @@ namespace WebAPI.Controllers
         [Route("UpdateActivityType")]
         public IActionResult UpdateActivityType(ActivityTypeDTO activityType)
         {
-            _activityTypeService.UpdateActivityTypeAsync(activityType);
-            return View();
+            var result=_activityTypeService.UpdateActivityTypeAsync(activityType);
+            return Ok(result);
         }
         [HttpPost]
         [Route("RemoveActivityType")]
         public IActionResult RemoveActivityType(ActivityTypeDTO activityType)
         {
-            _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
-            return View();
+            var result= _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
+            return Ok(result);
         }
         [HttpPost]
         [Route("GetAllActivityType")]
         public IActionResult GetAllActivityType()
         {
-            _activityTypeService.GetAllActivityTypesAsync();
-            return View();
+           var result= _activityTypeService.GetAllActivityTypesAsync();
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("GetActivityTypeById")]
+        public IActionResult GetActivityTypeById(int Id)
+        {
+            var result = _activityTypeService.GetActivityTypeByIdAsync(Id);
+            return Ok(result);
         }
         #endregion
     }

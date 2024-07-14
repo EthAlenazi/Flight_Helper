@@ -8,7 +8,7 @@ namespace WebAPI.Controllers
     public class TripController : Controller
     {
         [HttpPost]
-        public IActionResult CreateTripPlan(TripCreateDTO model)
+        public IActionResult CreateTripPlan(TripDTO model)
         {
             return View();
         }

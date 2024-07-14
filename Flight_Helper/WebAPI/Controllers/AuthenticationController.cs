@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
 
         }
         [HttpPost("CreateUser")]
-        public async Task<ActionResult<bool>> CreateUser(UserCreateDTO model)
+        public async Task<ActionResult<bool>> CreateUser(UserDTO model)
         {
             var result = await _user.CreateUser(model);
             return Ok(result);

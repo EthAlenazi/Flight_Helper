@@ -32,7 +32,7 @@ namespace WebAPI.Services
             var user = await _user.GetUserAsync(userName, password);
             return user;
         }
-        public async Task<bool> CreateUser(UserCreateDTO model)
+        public async Task<bool> CreateUser(UserDTO model)
         {
             User user = new User
             {
