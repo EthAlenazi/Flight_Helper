@@ -63,20 +63,15 @@ builder.Services.AddSwaggerGen(
                 $"{description.GroupName}",
                 new()
                 {
-                    Title = "Info API",
+                    Title = "A Program For Helping a clients to Planning her Trips",
                     Version = description.ApiVersion.ToString(),
-                    Description = "Through this API you can access our api."
+                    Description = "Through this UI you can access an api and tested."
                 });
         }
 
     }
     );
 #endregion
-
-
-
-
-
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();

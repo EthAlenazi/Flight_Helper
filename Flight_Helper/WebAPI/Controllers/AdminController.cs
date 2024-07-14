@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI.Data;
 using WebAPI.DTO;
 using WebAPI.DTO.Create;
@@ -7,6 +8,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/Admin")]
     public class AdminController : Controller
     {
@@ -20,24 +22,40 @@ namespace WebAPI.Controllers
             _transportTypeService = transportTypeService;
             _accommodationTypeService = accommodationTypeService;
         }
+        #region User
         [HttpPost]
-        [Route("GetUsersDetails")]
-        public IActionResult GetUsersDetails()
+        [Route("GetAllUsers")]
+        public IActionResult GetaAllUsers()
         {
             return View();
         }
         [HttpPost]
-        [Route("UpdateUserDetails")]
-        public IActionResult UpdateUserDetails(UserDTO userCreate)
+        [Route("ControlUserAccess")]
+        public IActionResult ControlUserAccess(Guid userId)
         {
             return View();
         }
+        #endregion
+        #region Trip
         [HttpPost]
         [Route("GetTripsDetails")]
-        public IActionResult GetTripsDetails()
+        public IActionResult GetTripsDetails(int id)
         {
             return View();
         }
+        [HttpPost]
+        [Route("UpdateTripsDetails")]
+        public IActionResult UpdateTripsDetails(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        [Route("GetAllTrips")]
+        public IActionResult GetAllTrips()
+        {
+            return View();
+        }
+        #endregion
         #region Accommodation
         [HttpPost]
         [Route("AddAccommodationType")]

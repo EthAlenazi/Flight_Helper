@@ -14,7 +14,6 @@ namespace WebAPI.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
-    //[ApiVersion(3)] //This for versioning All API inside controller
     public class AuthenticationController : ControllerBase
     {
         private readonly IUserServices _user;
@@ -24,8 +23,7 @@ namespace WebAPI.Controllers
             _user = user;
         }
         [HttpPost("LogIn")]
-        //[ApiVersion(0.1, Deprecated = true)]//To inform user this version will expired
-        public async Task<ActionResult<string>> Authenticate(AuthenticationDTO model)
+        public async Task<ActionResult<string>> LogIn(AuthenticationDTO model)
         {
             try
             {
