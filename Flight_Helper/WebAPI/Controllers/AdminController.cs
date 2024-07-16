@@ -153,10 +153,9 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("GetAllActivityType")]
-        public IActionResult GetAllActivityType()
+        [Route("GetAllActivityType")]        public async Task<IActionResult> GetAllActivityType()
         {
-           var result= _activityTypeService.GetAllActivityTypesAsync();
+            var result = await _activityTypeService.GetAllActivityTypesAsync();
             return Ok(result);
         }
         [HttpPost]
