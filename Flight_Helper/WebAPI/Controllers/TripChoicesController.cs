@@ -29,6 +29,10 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetAllTransportTypes()
         {
             var result =await  _transportTypeService.GetAllTransportTypesAsync();
+            if (result.Error==DTO.Errors.Success)
+            {
+                return BadRequest();
+            }
             return Ok(result);
         }
         [HttpGet]
@@ -36,6 +40,10 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetAllAccommodationTypes()
         {
             var result =await _accommodationTypeService.GetAllAccommodationTypesAsync();
+            if (result.Error == DTO.Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
     }

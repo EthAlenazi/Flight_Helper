@@ -62,8 +62,8 @@ namespace WebAPI.Controllers
         {
             var result =await  _accommodationTypeService.AddAccommodationTypeAsync(activityType);
             if (result.Error!=Errors.Success)
-                return Ok(result.Result);
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("UpdateAccommodationType")]
         public async Task<IActionResult> UpdateAccommodationType(AccommodationTypeDTO activityType)
@@ -74,28 +74,28 @@ namespace WebAPI.Controllers
             return BadRequest(result.ErrorMessage);
         }
         [HttpPost("RemoveAccommodationType")] 
-        public async Task<IActionResult> RemoveAccommodationType(AccommodationTypeDTO activityType)
+        public async Task<IActionResult> RemoveAccommodationType(int Id)
         {
-            var result = await _accommodationTypeService.DeleteAccommodationTypeAsync(activityType.Id);
+            var result = await _accommodationTypeService.DeleteAccommodationTypeAsync(Id);
             if (result.Error != Errors.Success)
-                return Ok(result.Result);
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.ErrorMessage);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("GetAllAccommodationTypes")] 
         public async Task<IActionResult> GetAllAccommodationTypes()
         {
             var result =await _accommodationTypeService.GetAllAccommodationTypesAsync();
             if (result.Error != Errors.Success)
-                return Ok(result.Results);
-            return BadRequest(result.ErrorMessage);
+                return BadRequest(result.Results);
+            return Ok(result.Results);
         }
         [HttpPost("GetAccommodationTypesById")]
         public async Task<IActionResult> GetAccommodationTypesById(int Id)
         {
             var result = await _accommodationTypeService.GetAccommodationTypeByIdAsync(Id);
             if (result.Error != Errors.Success)
-                return Ok(result.Result);
-            return BadRequest(result.ErrorMessage);
+                return Ok(result.ErrorMessage);
+            return Ok(result.Result);
         }
         #endregion
         #region Transport

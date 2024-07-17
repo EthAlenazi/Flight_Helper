@@ -6,10 +6,10 @@ namespace WebAPI.DTO.Create
     public class UserDTO
     {
         [Required]
-        [StringLength(50, MinimumLength = 10)]
+        [StringLength(50, MinimumLength = 4)]
         public string UserName { get; set; }
         [Required]
-        [RegularExpression("^\\+\\d{1,3}\\d{9}$", ErrorMessage = " Enter valid phone as +966 500000000")]
+        [RegularExpression("^\\+966\\d{9}$", ErrorMessage = "Enter a valid phone number as +966 followed by 9 digits.")]
         public string PhoneNumber { get; set; }
         public string? FullName { get; set; }
 
@@ -26,7 +26,7 @@ namespace WebAPI.DTO.Create
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(100, MinimumLength = 15)]
+        [StringLength(100, MinimumLength = 5)]
         public string Password { get; set; }
 
         [Required]
