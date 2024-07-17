@@ -103,21 +103,21 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> AddTransportType(TransportTypeDTO activityType)
         {
             var result = await _transportTypeService.AddTransportTypeAsync(activityType);
-            if (result.Error == Errors.Success)
+            if (result.Error != Errors.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }
-            return Ok(result.Result);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("UpdateTransportType")]
         public async Task<IActionResult> UpdateTransportType(TransportTypeDTO activityType)
         {
             var result = await _transportTypeService.UpdateTransportTypeAsync(activityType);
-            if (result.Error == Errors.Success)
+            if (result.Error != Errors.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }
-            return Ok(result.Result);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("RemoveTransportType")]
         public async Task<IActionResult> RemoveTransportType(int Id)
@@ -133,7 +133,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetAllTransportTypes()
         {
             var result = await _transportTypeService.GetAllTransportTypesAsync();
-            if (result.Error ==Errors.Success)
+            if (result.Error !=Errors.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }
@@ -143,7 +143,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetTransportTypesById(int Id)
         {
             var result = await _transportTypeService.GetTransportTypeByIdAsync(Id);
-            if (result.Error == Errors.Success)
+            if (result.Error != Errors.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }
@@ -159,7 +159,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.ErrorMessage);
             }
-            return Ok(result.Result);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("UpdateActivityType")]
         public async Task<IActionResult> UpdateActivityType(ActivityTypeDTO activityType)
@@ -169,17 +169,17 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(result.ErrorMessage);
             }
-            return Ok(result);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("RemoveActivityType")]
-        public async Task<IActionResult> RemoveActivityType(ActivityTypeDTO activityType)
+        public async Task<IActionResult> RemoveActivityType(int Id)
         {
-            var result=await _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
+            var result=await _activityTypeService.DeleteActivityTypeAsync(Id);
             if (result.Error != Errors.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }
-            return Ok(result);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost("GetAllActivityType")]
         public async Task<IActionResult> GetAllActivityType()
