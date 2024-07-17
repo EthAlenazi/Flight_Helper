@@ -8,7 +8,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/Admin")]
     public class AdminController : Controller
     {
@@ -57,113 +57,149 @@ namespace WebAPI.Controllers
         }
         #endregion
         #region Accommodation
-        [HttpPost]
-        [Route("AddAccommodationType")]
-        public IActionResult AddAccommodationType(AccommodationTypeDTO activityType)
+        [HttpPost("AddAccommodationType")]
+        public async Task<IActionResult> AddAccommodationType(AccommodationTypeDTO activityType)
         {
-            var Data = _accommodationTypeService.AddAccommodationTypeAsync(activityType);
-            return Ok("Accommodation type added");
+            var result =await  _accommodationTypeService.AddAccommodationTypeAsync(activityType);
+            if (result.Error!=Errors.Success)
+                return Ok(result.Result);
+            return BadRequest(result.ErrorMessage);
         }
-        [HttpPost]
-        [Route("UpdateAccommodationType")]
-        public IActionResult UpdateAccommodationType(AccommodationTypeDTO activityType)
+        [HttpPost("UpdateAccommodationType")]
+        public async Task<IActionResult> UpdateAccommodationType(AccommodationTypeDTO activityType)
         {
-            var result = _accommodationTypeService.UpdateAccommodationTypeAsync(activityType);
-            return Ok(result);
+            var result =await _accommodationTypeService.UpdateAccommodationTypeAsync(activityType);
+            if (result.Error != Errors.Success)
+                return Ok(result.Result);
+            return BadRequest(result.ErrorMessage);
         }
-        [HttpPost]
-        [Route("RemoveAccommodationType")]
-        public IActionResult RemoveAccommodationType(AccommodationTypeDTO activityType)
+        [HttpPost("RemoveAccommodationType")] 
+        public async Task<IActionResult> RemoveAccommodationType(AccommodationTypeDTO activityType)
         {
-            var result = _accommodationTypeService.DeleteAccommodationTypeAsync(activityType.Id);
-            return Ok(result);
+            var result = await _accommodationTypeService.DeleteAccommodationTypeAsync(activityType.Id);
+            if (result.Error != Errors.Success)
+                return Ok(result.Result);
+            return BadRequest(result.ErrorMessage);
         }
-        [HttpPost]
-        [Route("GetAllAccommodationTypes")]
-        public IActionResult GetAllAccommodationTypes()
+        [HttpPost("GetAllAccommodationTypes")] 
+        public async Task<IActionResult> GetAllAccommodationTypes()
         {
-            var result = _accommodationTypeService.GetAllAccommodationTypesAsync();
-            return Ok(result);
+            var result =await _accommodationTypeService.GetAllAccommodationTypesAsync();
+            if (result.Error != Errors.Success)
+                return Ok(result.Results);
+            return BadRequest(result.ErrorMessage);
         }
-        [HttpPost]
-        [Route("GetAccommodationTypesById")]
-        public IActionResult GetAccommodationTypesById(int Id)
+        [HttpPost("GetAccommodationTypesById")]
+        public async Task<IActionResult> GetAccommodationTypesById(int Id)
         {
-            var result = _accommodationTypeService.GetAccommodationTypeByIdAsync(Id);
-            return Ok(result);
+            var result = await _accommodationTypeService.GetAccommodationTypeByIdAsync(Id);
+            if (result.Error != Errors.Success)
+                return Ok(result.Result);
+            return BadRequest(result.ErrorMessage);
         }
         #endregion
         #region Transport
-        [HttpPost]
-        [Route("AddTransportType")]
-        public IActionResult AddTransportType(TransportTypeDTO activityType)
+        [HttpPost("AddTransportType")]
+        public async Task<IActionResult> AddTransportType(TransportTypeDTO activityType)
         {
-            var Data = _transportTypeService.AddTransportTypeAsync(activityType);
-            return Ok("Transport type added");
+            var result = await _transportTypeService.AddTransportTypeAsync(activityType);
+            if (result.Error == Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Result);
         }
-        [HttpPost]
-        [Route("UpdateTransportType")]
-        public IActionResult UpdateTransportType(TransportTypeDTO activityType)
+        [HttpPost("UpdateTransportType")]
+        public async Task<IActionResult> UpdateTransportType(TransportTypeDTO activityType)
         {
-            var result = _transportTypeService.UpdateTransportTypeAsync(activityType);
-            return Ok(result);
+            var result = await _transportTypeService.UpdateTransportTypeAsync(activityType);
+            if (result.Error == Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Result);
         }
-        [HttpPost]
-        [Route("RemoveTransportType")]
-        public IActionResult RemoveTransportType(TransportTypeDTO activityType)
+        [HttpPost("RemoveTransportType")]
+        public async Task<IActionResult> RemoveTransportType(int Id)
         {
-            var result = _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
-            return Ok(result);
+            var result = await _transportTypeService.DeleteTransportTypeAsync(Id);
+            if (result.Error == Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Result);
         }
-        [HttpPost]
-        [Route("GetAllTransportTypes")]
-        public IActionResult GetAllTransportTypes()
+        [HttpPost("GetAllTransportTypes")] 
+        public async Task<IActionResult> GetAllTransportTypes()
         {
-            var result = _transportTypeService.GetAllTransportTypesAsync();
-            return Ok(result);
+            var result = await _transportTypeService.GetAllTransportTypesAsync();
+            if (result.Error ==Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Results);
         }
-        [HttpPost]
-        [Route("GetTransportTypesById")]
-        public IActionResult GetTransportTypesById(int Id)
+        [HttpPost("GetTransportTypesById")]
+        public async Task<IActionResult> GetTransportTypesById(int Id)
         {
-            var result = _transportTypeService.GetTransportTypeByIdAsync(Id);
-            return Ok(result);
+            var result = await _transportTypeService.GetTransportTypeByIdAsync(Id);
+            if (result.Error == Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Result);
         }
         #endregion
         #region Activity
-        [HttpPost]
-        [Route("AddActivityType")]
-        public IActionResult AddActivityType(ActivityTypeDTO activityType)
+        [HttpPost("AddActivityType")]
+        public async Task<IActionResult> AddActivityType(ActivityTypeDTO activityType)
         {
-          var Data=  _activityTypeService.AddActivityTypeAsync(activityType);
-            return Ok("Activity type added");
+          var result = await  _activityTypeService.AddActivityTypeAsync(activityType);
+            if (result.Error != Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Result);
         }
-        [HttpPost]
-        [Route("UpdateActivityType")]
-        public IActionResult UpdateActivityType(ActivityTypeDTO activityType)
+        [HttpPost("UpdateActivityType")]
+        public async Task<IActionResult> UpdateActivityType(ActivityTypeDTO activityType)
         {
-            var result=_activityTypeService.UpdateActivityTypeAsync(activityType);
+            var result=await _activityTypeService.UpdateActivityTypeAsync(activityType);
+            if (result.Error != Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
-        [HttpPost]
-        [Route("RemoveActivityType")]
-        public IActionResult RemoveActivityType(ActivityTypeDTO activityType)
+        [HttpPost("RemoveActivityType")]
+        public async Task<IActionResult> RemoveActivityType(ActivityTypeDTO activityType)
         {
-            var result= _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
+            var result=await _activityTypeService.DeleteActivityTypeAsync(activityType.Id);
+            if (result.Error != Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
             return Ok(result);
         }
-        [HttpPost]
-        [Route("GetAllActivityType")]        public async Task<IActionResult> GetAllActivityType()
+        [HttpPost("GetAllActivityType")]
+        public async Task<IActionResult> GetAllActivityType()
         {
             var result = await _activityTypeService.GetAllActivityTypesAsync();
-            return Ok(result);
+            if (result.Error != Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Results);
         }
-        [HttpPost]
-        [Route("GetActivityTypeById")]
-        public IActionResult GetActivityTypeById(int Id)
+        [HttpPost("GetActivityTypeById")]
+        public async Task<IActionResult> GetActivityTypeById(int Id)
         {
-            var result = _activityTypeService.GetActivityTypeByIdAsync(Id);
-            return Ok(result);
+            var result =await _activityTypeService.GetActivityTypeByIdAsync(Id);
+            if (result.Error != Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Result);
         }
         #endregion
     }
