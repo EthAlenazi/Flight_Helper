@@ -19,9 +19,15 @@ namespace WebAPI.Entities
         }
         public async Task<bool> AddUserAsync(User user)
         {
-            await _dbContext.Users.AddAsync(user);
-            await _dbContext.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _dbContext.Users.AddAsync(user);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex) {
+                return false;
+            }
         }
 
 

@@ -44,8 +44,11 @@ namespace WebAPI.Services
                 Role=model.Role,
                 NormalizedUserName=model.FullName
             };
-            _user.AddUserAsync(user);
-            return true;
+            bool result =await _user.AddUserAsync(user);
+            if(result)
+                return true;
+
+            return false;
         }
 
         public string GenerateToken(User model)

@@ -44,7 +44,9 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<bool>> CreateUser(UserDTO model)
         {
             var result = await _user.CreateUser(model);
-            return Ok(result);
+            if(result)
+                return Ok(result); 
+            return NotFound("something happened! Contact with customer service to help you");
         }
 
     }
