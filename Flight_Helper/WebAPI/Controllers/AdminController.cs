@@ -12,15 +12,18 @@ namespace WebAPI.Controllers
     [Route("api/Admin")]
     public class AdminController : Controller
     {
-    private readonly IActivityTypeService _activityTypeService;
-    private readonly ITransportTypeService _transportTypeService;
+        private readonly IActivityTypeService _activityTypeService;
+        private readonly ITransportTypeService _transportTypeService;
         private readonly IAccommodationTypeService _accommodationTypeService;
+        private readonly ITripServices _tripsService;
+
         public AdminController(IActivityTypeService activityTypeService, ITransportTypeService transportTypeService
-            , IAccommodationTypeService accommodationTypeService)
+            , IAccommodationTypeService accommodationTypeService, ITripServices tripsService)
         {
             _activityTypeService = activityTypeService;
             _transportTypeService = transportTypeService;
             _accommodationTypeService = accommodationTypeService;
+            _tripsService = tripsService;
         }
         #region User
         [HttpPost]
@@ -37,11 +40,14 @@ namespace WebAPI.Controllers
         }
         #endregion
         #region Trip
-        [HttpPost]
-        [Route("GetTripsDetails")]
-        public IActionResult GetTripsDetails(int id)
+        [HttpPost("GetTripsDetails")]
+        public async Task<IActionResult> GetTripDetails(int Id)
         {
-            return View();
+            var result = await _tripsService.GetTripWithDetailsAsync(Id);
+
+            if (result.Error != Errors.Success)
+                return BadRequest(result.ErrorMessage);
+            return Ok(result.Result);
         }
         [HttpPost]
         [Route("UpdateTripsDetails")]
@@ -51,9 +57,12 @@ namespace WebAPI.Controllers
         }
         [HttpPost]
         [Route("GetAllTrips")]
-        public IActionResult GetAllTrips()
+        public async  Task<IActionResult> GetAllTrips()
         {
-            return View();
+            var result = await _tripsService.GetAllTrip();
+            if (result.Error != Errors.Success)
+                return BadRequest(result.ErrorMessage);
+            return Ok(result.Results);
         }
         #endregion
         #region Accommodation

@@ -3,6 +3,7 @@ using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PdfSharp.Charting;
 using System;
 using System.Reflection;
 using System.Text;
@@ -85,12 +86,16 @@ builder.Services.AddSwaggerGen(
     );
 #endregion
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IActivityTypeService, ActivityTypeService>();
 builder.Services.AddScoped<ITransportTypeService, TransportTypeService>();
 builder.Services.AddScoped<IAccommodationTypeService, AccommodationTypeService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
+builder.Services.AddScoped<ITripServices, TripsService>();
+builder.Services.AddScoped<IPdfService, PdfService>();
+
 
 var app = builder.Build();
 

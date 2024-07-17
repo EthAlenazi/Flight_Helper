@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebAPI.DTO;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers
@@ -16,35 +17,33 @@ namespace WebAPI.Controllers
             _transportTypeService = transportTypeService;
             _accommodationTypeService = accommodationTypeService;
         }
-        [HttpGet]
-        [Route("GetAllActivityType")]
-        //[ResponseCache(Duration = 120)]
+        [HttpPost("GetAllActivityType")]
         public async Task<IActionResult> GetAllActivityType()
         {
             var result = await _activityTypeService.GetAllActivityTypesAsync();
-            return Ok(result);
-        }
-        [HttpGet]
-        [Route("GetAllTransportTypes")]
-        public async Task<IActionResult> GetAllTransportTypes()
-        {
-            var result =await  _transportTypeService.GetAllTransportTypesAsync();
-            if (result.Error==DTO.Errors.Success)
-            {
-                return BadRequest();
-            }
-            return Ok(result);
-        }
-        [HttpGet]
-        [Route("GetAllAccommodationTypes")]
-        public async Task<IActionResult> GetAllAccommodationTypes()
-        {
-            var result =await _accommodationTypeService.GetAllAccommodationTypesAsync();
-            if (result.Error == DTO.Errors.Success)
+            if (result.Error != Errors.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }
-            return Ok(result);
+            return Ok(result.Results);
+        }
+        [HttpPost("GetAllTransportTypes")]
+        public async Task<IActionResult> GetAllTransportTypes()
+        {
+            var result = await _transportTypeService.GetAllTransportTypesAsync();
+            if (result.Error != Errors.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+            return Ok(result.Results);
+        }
+        [HttpPost("GetAllAccommodationTypes")]
+        public async Task<IActionResult> GetAllAccommodationTypes()
+        {
+            var result = await _accommodationTypeService.GetAllAccommodationTypesAsync();
+            if (result.Error != Errors.Success)
+                return BadRequest(result.Results);
+            return Ok(result.Results);
         }
     }
 }
