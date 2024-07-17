@@ -11,3 +11,12 @@
 /Flight_Helper/WebAPI/bin/Release/net8.0
 /Flight_Helper/WebAPI/Properties/PublishProfiles
 *.json
+/Flight_Helper/TripSite/bin/Debug/net8.0/af/Humanizer.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/ar/Humanizer.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Features.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.Features.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.Scripting.resources.dll
+/Flight_Helper/TripSite/bin/Debug/net8.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
