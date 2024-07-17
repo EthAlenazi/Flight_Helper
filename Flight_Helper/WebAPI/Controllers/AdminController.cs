@@ -51,9 +51,12 @@ namespace WebAPI.Controllers
         }
         [HttpPost]
         [Route("UpdateTripsDetails")]
-        public IActionResult UpdateTripsDetails(int id)
+        public async Task< IActionResult> UpdateTripsDetails(TripDTO trip)
         {
-            return View();
+            var result = await _tripsService.UpdateTripAsync(trip);
+            if (result.Error != Errors.Success)
+                return BadRequest(result.ErrorMessage);
+            return Ok(result.ErrorMessage);
         }
         [HttpPost]
         [Route("GetAllTrips")]

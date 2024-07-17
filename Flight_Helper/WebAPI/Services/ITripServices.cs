@@ -7,5 +7,6 @@ namespace WebAPI.Services
         Task<Response<TripDTO>> CreateTripAsync(TripCreateDTO tripCreateDTO);
         Task<Response<TripDTO>> GetTripWithDetailsAsync(int Id);
         Task<Response<TripDTO>> GetAllTrip();
+        Task<Response<TripDTO>> UpdateTripAsync(TripDTO trip);
     }
 }

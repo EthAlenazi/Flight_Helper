@@ -116,4 +116,46 @@ public class TripsService:ITripServices
             return response;
         }
     }
+
+
+    public async Task<Response<TripDTO>> UpdateTripAsync(TripDTO trip)
+    {
+        var response = new Response<TripDTO>();
+        try
+        {
+            var entity = await _context.Trips
+                .Include(t => t.User)
+                .Include(t => t.Destinations)
+                .Include(t => t.Accommodations)
+                .Include(t => t.Transports)
+                .Include(t => t.Activities)
+                .Include(t => t.Expenses)
+                .Include(t => t.Companions)
+                .FirstOrDefaultAsync(t => t.TripID == trip.TripId);
+
+            if (trip == null)
+            {
+                response.Error = Errors.NotFound;
+                response.ErrorMessage = "No Data Found!";
+                return response;
+            }
+
+            var Data = _mapper.Map<Trip>(trip);
+
+            _context.Update(Data);
+            await _context.SaveChangesAsync();
+            response.Error = Errors.Success; // No error
+            response.ErrorMessage = "Trip updated successfully.";
+
+            return response;
+        }
+        catch (Exception ex)
+        {
+            // Handle exception
+            response.Error = Errors.ServerError; // Indicate an exception occurred
+            response.Result = null;
+            response.ErrorMessage = $"An error occurred while updating Trip: {ex.Message}";
+            return response;
+        }
+    }
 }
