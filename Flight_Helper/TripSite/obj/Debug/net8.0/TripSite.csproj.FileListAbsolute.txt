@@ -224,3 +224,4 @@ C:\Sorce\Flight_Helper\Flight_Helper\TripSite\bin\Debug\net8.0\runtimes\win\lib\
 C:\Sorce\Flight_Helper\Flight_Helper\TripSite\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll
 C:\Sorce\Flight_Helper\Flight_Helper\TripSite\obj\Debug\net8.0\TripSite.csproj.AssemblyReference.cache
 C:\Sorce\Flight_Helper\Flight_Helper\TripSite\obj\Debug\net8.0\TripSite.csproj.Up2Date
+C:\Sorce\Flight_Helper\Flight_Helper\TripSite\bin\Debug\net8.0\libman.json
