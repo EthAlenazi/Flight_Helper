@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TripSite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dea6d8d558d45fbf43f6155d36f018d7fc717114")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6278b8ac4f013ed1f84d4ff1c30bf8aef90c3c57")]
 [assembly: System.Reflection.AssemblyProductAttribute("TripSite")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TripSite")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

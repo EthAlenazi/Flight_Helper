@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using WebAPI.Data;
 using WebAPI.DTO.Create;
 using WebAPI.Entities;
@@ -13,24 +14,24 @@ namespace WebAPI.Services
     {
         private readonly IUsersRepository _user;
         private readonly IConfiguration _configuration;
+        private readonly JwtSettings _jwtSettings;
+        private readonly StaticCredentials _staticCredentials;
         public UserServices(IUsersRepository user, IConfiguration configuration)
         {
             _user = user;
             _configuration = configuration;
         }
-        public async Task<string> ValidateUserCredentials(string userName, string password)
+        public async Task<bool> IsValidDynamicUser(LoginModel model)
         {
-            User user = await _user.GetUserAsync(userName, password);
+            User user = await _user.GetUserAsync(model.Username, model.Password);
             if (user == null)
-                return "User Not Found!";
-           var token=  GenerateToken(user);
-            return token;
+                return false;
+            return true;
 
         }
-        public async Task<IdentityUser> GetTokenuser(string userName, string password)
+        public async Task<bool> IsValidStaticUser(LoginModel login)
         {
-            var user = await _user.GetUserAsync(userName, password);
-            return user;
+            return false;// login.Username ==  _staticCredentials.Username && login.Password == _staticCredentials.Password;
         }
         public async Task<bool> CreateUser(UserDTO model)
         {
@@ -51,30 +52,25 @@ namespace WebAPI.Services
             return false;
         }
 
-        public string GenerateToken(User model)
+        public string GenerateToken(string username)
         {
             try
             {
-                var securityKey = new SymmetricSecurityKey(
-                    Convert.FromBase64String(_configuration["Authentication:SecretForKey"]));
-                var signingCredentials = new SigningCredentials(
-                    securityKey, SecurityAlgorithms.HmacSha256);
-
-                var claimsForToken = new List<Claim>();
-                claimsForToken.Add(new Claim("sub", model.UserName));
-                claimsForToken.Add(new Claim("PhoneNumber", model.PhoneNumber));
-
-                var jwtSecurityToken = new JwtSecurityToken(
-                    _configuration["Authentication:Issuer"],
-                    _configuration["Authentication:Audience"],
-                    claimsForToken,
-                    DateTime.UtcNow,
-                    DateTime.UtcNow.AddHours(1),
-                    signingCredentials);
-
-                var tokenToReturn = new JwtSecurityTokenHandler()
-                   .WriteToken(jwtSecurityToken);
-                return tokenToReturn;
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_jwtSettings.SecretKey);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                new Claim(ClaimTypes.Name, username)
+                    }),
+                    Expires = DateTime.UtcNow.AddHours(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                    Issuer = _jwtSettings.Issuer,
+                    Audience = _jwtSettings.Audience
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                return tokenHandler.WriteToken(token);
             }
             catch (Exception ex)
             {

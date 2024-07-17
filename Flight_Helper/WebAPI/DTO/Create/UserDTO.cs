@@ -35,4 +35,10 @@ namespace WebAPI.DTO.Create
         public string ConfirmPassword { get; set; }
         public int AccessFailedCount { get; set; } = 6;
     }
+
+    public class LoginModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
 }

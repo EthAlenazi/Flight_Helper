@@ -1,11 +1,14 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Reflection;
+using System.Text;
 using WebAPI.Data;
 using WebAPI.Entities;
+using WebAPI.Models;
 using WebAPI.Repository.Implementation;
 using WebAPI.Repository.Interface;
 using WebAPI.Services;
@@ -18,22 +21,26 @@ builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("Connection");
 builder.Services.AddDbContext<FlightHelperDBContext>(options =>
     options.UseSqlServer(connectionString));
+//for authentication
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.Configure<StaticCredentials>(builder.Configuration.GetSection("StaticCredentials"));
 
-builder.Services.AddAuthentication("Bearer")
+// Add JWT authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.TokenValidationParameters = new()
+        var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+        options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
+            ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Authentication:Issuer"],
-            ValidAudience = builder.Configuration["Authentication:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(
-                builder.Configuration["Authentication:SecretForKey"]))
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
         };
-    }
-    );
+    });
 
 
 

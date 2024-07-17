@@ -22,23 +22,18 @@ namespace WebAPI.Controllers
         {
             _user = user;
         }
-        [HttpPost("LogIn")]
-        public async Task<ActionResult<string>> LogIn(AuthenticationDTO model)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel login)
         {
-            try
+            var StaticUser = await _user.IsValidStaticUser(login);
+            var DynamicUser = await _user.IsValidDynamicUser(login);
+            if (StaticUser || DynamicUser)
             {
-                if (model == null)
-                {
-                    return BadRequest();
-                }
-                var user = await _user.ValidateUserCredentials(model.UserName, model.Password);
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
+                var token = _user.GenerateToken(login.Username);
+                return Ok(new { Token = token });
             }
 
+            return Unauthorized();
         }
         [HttpPost("CreateUser")]
         public async Task<ActionResult<bool>> CreateUser(UserDTO model)

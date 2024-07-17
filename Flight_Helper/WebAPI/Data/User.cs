@@ -18,13 +18,13 @@ namespace WebAPI.Data
     }
     public enum Gender
     {
-        Female,
-        Male
+        Female=0,
+        Male=1
     }
     public enum Role
     {
-        AdminFullAccess,
-        AdminViewData,
-        Client
+        AdminFullAccess= 1,
+        AdminViewData= 2,
+        Client=3
     }
 }
