@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace TripSite.Models
 {
@@ -30,11 +31,10 @@ namespace TripSite.Models
         [Range(1, int.MaxValue)]
         public int NumberOfPassengers { get; set; }
     }
-
     public class DestinationViewModel
     {
         //[Required]
-        public int TripID { get; set; } = 2;
+        public int TripID { get; set; } 
 
         //[Required]
         //[StringLength(100)]

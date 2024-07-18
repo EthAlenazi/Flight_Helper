@@ -1,9 +1,6 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using WebAPI.DTO;
-
-
-
 namespace WebAPI.Services
 {
 

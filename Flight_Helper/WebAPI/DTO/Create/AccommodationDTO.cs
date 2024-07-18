@@ -1,19 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using WebAPI.Data;
 
 namespace WebAPI.DTO
 {
-    public class AccommodationDTO
+    public class AccommodationViweModel
     {
         [Required]
         public int TripID { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
-
-        [StringLength(200)]
-        public string Address { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
@@ -23,8 +17,6 @@ namespace WebAPI.DTO
         [DataType(DataType.Date)]
         public DateTime CheckOutDate { get; set; }
 
-        [Required]
-        [Range(0, double.MaxValue)]
-        public decimal Cost { get; set; }
+        public List<SelectListItem> AccommodationTypes { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+﻿@model TripDTO
+
+@{
+    ViewData["Title"] = "Generate Trip PDF";
+}
+
+<h2>Generate Trip PDF</h2>
+
+<form asp-action="GeneratePdf" method="post">
+    <div class="form-group">
+        <label asp-for="TripName"></label>
+        <input asp-for="TripName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="StartDate"></label>
+        <input asp-for="StartDate" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EndDate"></label>
+        <input asp-for="EndDate" class="form-control" type="date" />
+    </div>
+    <button type="submit" class="btn btn-primary">Generate PDF</button>
+</form>

@@ -1,0 +1,30 @@
+﻿@model ActivityDTO
+
+@{
+    ViewData["Title"] = "Add Activity";
+}
+
+<h1>Add Transport</h1>
+
+<form asp-action="AddTransport">
+    <input type="hidden" asp-for="TripID" />
+    <div class="form-group">
+        <label asp-for="ActivityTypes" class="control-label"></label>
+        <select asp-for="ActivityTypes" class="form-control" asp-items="Model.ActivityTypes"></select>
+        <span asp-validation-for="ActivityTypes" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateTime" class="control-label"></label>
+        <input asp-for="DateTime" class="form-control" />
+        <span asp-validation-for="DateTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Note" class="control-label"></label>
+        <textarea asp-for="Note" class="form-control"></textarea>
+        <span asp-validation-for="Note" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Next" class="btn btn-primary" />
+    </div>
+</form>
+

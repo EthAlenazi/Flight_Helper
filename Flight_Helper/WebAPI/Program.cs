@@ -94,8 +94,8 @@ builder.Services.AddScoped<ITransportTypeService, TransportTypeService>();
 builder.Services.AddScoped<IAccommodationTypeService, AccommodationTypeService>();
 builder.Services.AddScoped<IUserServices, UserServices>();
 builder.Services.AddScoped<ITripServices, TripsService>();
+builder.Services.AddScoped<IAddServices, AddServices>();
 builder.Services.AddScoped<IPdfService, PdfService>();
-
 
 var app = builder.Build();
 

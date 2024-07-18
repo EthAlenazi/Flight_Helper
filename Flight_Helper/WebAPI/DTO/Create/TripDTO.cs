@@ -43,8 +43,8 @@ namespace WebAPI.DTO
         public string? Notes { get; set; }
         public int NumberOfPassengers { get; set; }
         public List<DestinationDTO> Destinations { get; set; }
-        public List<AccommodationDTO> Accommodations { get; set; }
-        public List<TransportDTO> Transports { get; set; }
+        public List<AccommodationViweModel> Accommodations { get; set; }
+        public List<TransportViewModel> Transports { get; set; }
         public List<ActivityDTO> Activities { get; set; }
         public List<ExpenseDTO> Expenses { get; set; }
         public List<CompanionDTO> Companions { get; set; }

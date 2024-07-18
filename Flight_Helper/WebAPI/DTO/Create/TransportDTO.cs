@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using WebAPI.Data;
 
 namespace WebAPI.DTO
 {
-    public class TransportDTO
+    public class TransportViewModel
     {
-        [Required]
         public int TripID { get; set; }
 
         [Required]
-        [AllowedValues(typeof(TransportType))]
         public int Type { get; set; }
 
         [Required]
@@ -22,15 +21,13 @@ namespace WebAPI.DTO
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime DepartureDateTime { get; set; }
+        public DateTime DepartureDateTime { get; set; } = DateTime.Now;
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime ArrivalDateTime { get; set; }
-
-        [Required]
-        [Range(0, double.MaxValue)]
-        public decimal Cost { get; set; }
+        public DateTime ArrivalDateTime { get; set; } = DateTime.Now;
+        public string Note { get; set; }
+        public List<SelectListItem> TransportTypes { get; set; }
     }
 
    

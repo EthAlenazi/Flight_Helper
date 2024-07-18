@@ -22,14 +22,16 @@ namespace WebAPI.Profiles
             CreateMap<User,UserDTO>();
             CreateMap<UserDTO,User>();
             
-            CreateMap<Transport,TransportDTO>();
-            CreateMap<TransportDTO, Transport>();
+            CreateMap<Transport,TransportViewModel>();
+            CreateMap<Transport, TransportViewModel>();
+
+            CreateMap<TransportViewModel, Transport>();
 
             CreateMap<Expense, ExpenseDTO>();
             CreateMap<ExpenseDTO, Expense>();
 
             CreateMap<Destination, DestinationDTO>();
-            CreateMap<DestinationDTO, Destination>(); 
+            CreateMap<DestinationDTO, Destination>();
 
             CreateMap<Companion, CompanionDTO>();
             CreateMap<CompanionDTO, Companion>(); 
@@ -37,8 +39,8 @@ namespace WebAPI.Profiles
             CreateMap<Activity, ActivityDTO>();
             CreateMap<ActivityDTO, Activity>(); 
 
-            CreateMap<Accommodation, AccommodationDTO>();
-            CreateMap<AccommodationDTO, Accommodation>();
+            CreateMap<Accommodation, AccommodationViweModel>();
+            CreateMap<AccommodationViweModel, Accommodation>();
 
 
         }
