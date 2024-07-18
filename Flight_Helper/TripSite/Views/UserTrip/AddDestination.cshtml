@@ -1,0 +1,10 @@
+﻿@model TripSite.Models.DestinationViewModel
+
+@{
+    ViewData["Title"] = "Add Destination";
+}
+
+<h1>Add Destination</h1>
+
+@* Render the partial view *@
+@await Html.PartialAsync("~/Views/Shared/_Destination.cshtml", Model)

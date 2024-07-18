@@ -1,84 +1,66 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO.Pipelines;
+using TripSite.Models;
 using TripSite.ViewModel;
 
 namespace TripSite.Controllers
 {
     public class UserTripController : Controller
     {
-        //// GET: UserTripController1cs
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        //// GET: UserTripController1cs/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
-
-        // GET: UserTripController1cs/Create
-        public ActionResult Create()
+        [HttpGet]
+        public IActionResult Create()
         {
-            return View();
+            var model = new TripViewModel
+            {
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(5),
+                //for test perpos
+                TripId= 3
+            }; // Initialize with default values if needed
+            return View(model);
         }
 
-        // POST: UserTripController1cs/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateTrip collection)
+        public IActionResult Create(TripViewModel model)
         {
-            try
+            model.TripId = 3;
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Create));
+                // Handle form submission, e.g., save to database
+
+                //ater valid save i want send data responce to the next viwe AddDestination with trip id 
+                return RedirectToAction("AddDestination", new { trip = model });
             }
-            catch
-            {
-                return View();
-            }
+
+            // If validation fails, redisplay the form
+            return View(model);
+           
         }
 
-        //// GET: UserTripController1cs/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        [HttpGet]
+        public IActionResult AddDestination(TripViewModel trip)
+        {
+            var model = new DestinationViewModel
+            {
+                TripID = trip.TripId,
+                ArrivalDate= DateTime.Now,
+                DepartureDate= DateTime.Now.AddDays(6),
+            }; // Initialize with default values if needed
+            return View(model);
+        }
 
-        //// POST: UserTripController1cs/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        [HttpPost]
+        public IActionResult AddDestination(DestinationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Handle form submission, e.g., save to database
+                RedirectToAction();
+            }
 
-        //// GET: UserTripController1cs/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
-        //// POST: UserTripController1cs/Delete/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            // If validation fails, redisplay the form
+            return View(model);
+        }
     }
 }

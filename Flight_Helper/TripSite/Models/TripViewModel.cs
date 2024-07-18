@@ -30,4 +30,28 @@ namespace TripSite.Models
         [Range(1, int.MaxValue)]
         public int NumberOfPassengers { get; set; }
     }
+
+    public class DestinationViewModel
+    {
+        //[Required]
+        public int TripID { get; set; } = 2;
+
+        //[Required]
+        //[StringLength(100)]
+        public string Name { get; set; }
+
+        //[StringLength(100)]
+        public string Country { get; set; }
+
+        //[StringLength(100)]
+        public string City { get; set; }
+
+        //[Required]
+        //[DataType(DataType.Date)]
+        public DateTime ArrivalDate { get; set; }
+
+        //[Required]
+        //[DataType(DataType.Date)]
+        public DateTime DepartureDate { get; set; }
+    }
 }
