@@ -32,13 +32,6 @@ namespace WebAPI.DTO
         [Required]
         [Range(1, int.MaxValue)]
         public int NumberOfPassengers { get; set; }
-        public UserDTO User { get; set; }
-        public List<DestinationDTO> Destinations { get; set; }
-        public List<AccommodationDTO> Accommodations { get; set; }
-        public List<TransportDTO> Transports { get; set; }
-        public List<ActivityDTO> Activities { get; set; }
-        public List<ExpenseDTO> Expenses { get; set; }
-        public List<CompanionDTO> Companions { get; set; }
     }
     public class TripCreateDTO
     {

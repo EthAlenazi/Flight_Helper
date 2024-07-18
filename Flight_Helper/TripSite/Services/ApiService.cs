@@ -18,7 +18,7 @@ public class ApiService
         var token = _authService.GetJwtToken();
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        var response = await _httpClient.PostAsync("https://yourapi.com/api/items",);
+        var response = await _httpClient.GetAsync("https://yourapi.com/api/items");
 
         if (response.IsSuccessStatusCode)
         {
