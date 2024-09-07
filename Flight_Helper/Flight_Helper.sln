@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{EF982F57-9E23-496B-84CD-C38D19380BD1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripSite", "TripSite\TripSite.csproj", "{C072383C-2027-420F-9E21-289EACBAF9AF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itinerary_Generator", "Itinerary_Generator\Itinerary_Generator.csproj", "{54289B41-BE6C-4D39-904E-83385B79BB59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Itinerary_Generator", "Itinerary_Generator\Itinerary_Generator.csproj", "{54289B41-BE6C-4D39-904E-83385B79BB59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF982F57-9E23-496B-84CD-C38D19380BD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF982F57-9E23-496B-84CD-C38D19380BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF982F57-9E23-496B-84CD-C38D19380BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF982F57-9E23-496B-84CD-C38D19380BD1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C072383C-2027-420F-9E21-289EACBAF9AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C072383C-2027-420F-9E21-289EACBAF9AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C072383C-2027-420F-9E21-289EACBAF9AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C072383C-2027-420F-9E21-289EACBAF9AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54289B41-BE6C-4D39-904E-83385B79BB59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54289B41-BE6C-4D39-904E-83385B79BB59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54289B41-BE6C-4D39-904E-83385B79BB59}.Release|Any CPU.ActiveCfg = Release|Any CPU
