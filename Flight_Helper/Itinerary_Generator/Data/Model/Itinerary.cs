@@ -2,10 +2,6 @@
 {
     public class Itinerary
     {
-        public Itinerary(User user)
-        {
-            this.user = user;
-        }
         public int ItineraryID { get; set; }
         public int UserID { get; set; }
         public int TotalCost { get; set; }
