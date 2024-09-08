@@ -15,6 +15,8 @@ namespace Itinerary_Generator.Data
         DbSet<Day> Days { get; set; }
         DbSet<DailyActivity> DailyActivities { get; set; }
         DbSet<DailyTransport> DailyTransports { get; set; }
-        DbSet<LookupTypes> LookupTypes { get; set; }
+        DbSet<LookupTransportType> lookupTransportTypes { get; set; }
+        DbSet<LookupActivitityType> lookupActivitityTypes { get; set; }
+        DbSet<LookupDestination> lookupDestinations { get; set; }
     }
 }

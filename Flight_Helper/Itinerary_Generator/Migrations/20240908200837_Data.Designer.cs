@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Itinerary_Generator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240908191546_Data2")]
-    partial class Data2
+    [Migration("20240908200837_Data")]
+    partial class Data
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,7 +41,7 @@ namespace Itinerary_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LookupTypesID")
+                    b.Property<int>("LookupTransportTypesID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -53,7 +53,7 @@ namespace Itinerary_Generator.Migrations
 
                     b.HasKey("ActivityID");
 
-                    b.HasIndex("LookupTypesID");
+                    b.HasIndex("LookupTransportTypesID");
 
                     b.ToTable("Activities");
                 });
@@ -163,7 +163,7 @@ namespace Itinerary_Generator.Migrations
                     b.ToTable("Itineraries");
                 });
 
-            modelBuilder.Entity("Itinerary_Generator.Data.Model.LookupTypes", b =>
+            modelBuilder.Entity("Itinerary_Generator.Data.Model.LookupActivitityType", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -175,13 +175,64 @@ namespace Itinerary_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Key")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.ToTable("LookupTypes");
+                    b.ToTable("lookupActivitityTypes");
+                });
+
+            modelBuilder.Entity("Itinerary_Generator.Data.Model.LookupDestination", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Key")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("lookupDestinations");
+                });
+
+            modelBuilder.Entity("Itinerary_Generator.Data.Model.LookupTransportType", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Key")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("lookupTransportTypes");
                 });
 
             modelBuilder.Entity("Itinerary_Generator.Data.Model.Preference", b =>
@@ -196,7 +247,7 @@ namespace Itinerary_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LookupTypesID")
+                    b.Property<int>("LookupTransportTypeID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserID")
@@ -204,7 +255,7 @@ namespace Itinerary_Generator.Migrations
 
                     b.HasKey("PreferenceID");
 
-                    b.HasIndex("LookupTypesID");
+                    b.HasIndex("LookupTransportTypeID");
 
                     b.ToTable("preferences");
                 });
@@ -224,7 +275,7 @@ namespace Itinerary_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LookupTypesID")
+                    b.Property<int>("LookupTransportTypeID")
                         .HasColumnType("int");
 
                     b.Property<string>("StartLocation")
@@ -236,7 +287,7 @@ namespace Itinerary_Generator.Migrations
 
                     b.HasKey("TransportID");
 
-                    b.HasIndex("LookupTypesID");
+                    b.HasIndex("LookupTransportTypeID");
 
                     b.ToTable("Transports");
                 });
@@ -268,13 +319,13 @@ namespace Itinerary_Generator.Migrations
 
             modelBuilder.Entity("Itinerary_Generator.Data.Model.Activity", b =>
                 {
-                    b.HasOne("Itinerary_Generator.Data.Model.LookupTypes", "LookupTypes")
+                    b.HasOne("Itinerary_Generator.Data.Model.LookupTransportType", "LookupTransportTypes")
                         .WithMany()
-                        .HasForeignKey("LookupTypesID")
+                        .HasForeignKey("LookupTransportTypesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LookupTypes");
+                    b.Navigation("LookupTransportTypes");
                 });
 
             modelBuilder.Entity("Itinerary_Generator.Data.Model.DailyActivity", b =>
@@ -347,24 +398,24 @@ namespace Itinerary_Generator.Migrations
 
             modelBuilder.Entity("Itinerary_Generator.Data.Model.Preference", b =>
                 {
-                    b.HasOne("Itinerary_Generator.Data.Model.LookupTypes", "LookupTypes")
+                    b.HasOne("Itinerary_Generator.Data.Model.LookupTransportType", "LookupTransportType")
                         .WithMany()
-                        .HasForeignKey("LookupTypesID")
+                        .HasForeignKey("LookupTransportTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LookupTypes");
+                    b.Navigation("LookupTransportType");
                 });
 
             modelBuilder.Entity("Itinerary_Generator.Data.Model.Transport", b =>
                 {
-                    b.HasOne("Itinerary_Generator.Data.Model.LookupTypes", "LookupTypes")
+                    b.HasOne("Itinerary_Generator.Data.Model.LookupTransportType", "LookupTransportType")
                         .WithMany()
-                        .HasForeignKey("LookupTypesID")
+                        .HasForeignKey("LookupTransportTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("LookupTypes");
+                    b.Navigation("LookupTransportType");
                 });
 #pragma warning restore 612, 618
         }

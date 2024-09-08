@@ -12,17 +12,48 @@ namespace Itinerary_Generator.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "LookupTypes",
+                name: "lookupActivitityTypes",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LookupTypes", x => x.ID);
+                    table.PrimaryKey("PK_lookupActivitityTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "lookupDestinations",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_lookupDestinations", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "lookupTransportTypes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_lookupTransportTypes", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,15 +81,15 @@ namespace Itinerary_Generator.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    lookupTypesID = table.Column<int>(type: "int", nullable: false)
+                    LookupTransportTypesID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Activities", x => x.ActivityID);
                     table.ForeignKey(
-                        name: "FK_Activities_LookupTypes_lookupTypesID",
-                        column: x => x.lookupTypesID,
-                        principalTable: "LookupTypes",
+                        name: "FK_Activities_lookupTransportTypes_LookupTransportTypesID",
+                        column: x => x.LookupTransportTypesID,
+                        principalTable: "lookupTransportTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -71,15 +102,15 @@ namespace Itinerary_Generator.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     ActivityType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    lookupTypesID = table.Column<int>(type: "int", nullable: false)
+                    LookupTransportTypeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_preferences", x => x.PreferenceID);
                     table.ForeignKey(
-                        name: "FK_preferences_LookupTypes_lookupTypesID",
-                        column: x => x.lookupTypesID,
-                        principalTable: "LookupTypes",
+                        name: "FK_preferences_lookupTransportTypes_LookupTransportTypeID",
+                        column: x => x.LookupTransportTypeID,
+                        principalTable: "lookupTransportTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -94,15 +125,15 @@ namespace Itinerary_Generator.Migrations
                     Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StartLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EndLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    lookupTypesID = table.Column<int>(type: "int", nullable: false)
+                    LookupTransportTypeID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Transports", x => x.TransportID);
                     table.ForeignKey(
-                        name: "FK_Transports_LookupTypes_lookupTypesID",
-                        column: x => x.lookupTypesID,
-                        principalTable: "LookupTypes",
+                        name: "FK_Transports_lookupTransportTypes_LookupTransportTypeID",
+                        column: x => x.LookupTransportTypeID,
+                        principalTable: "lookupTransportTypes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -211,9 +242,9 @@ namespace Itinerary_Generator.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Activities_lookupTypesID",
+                name: "IX_Activities_LookupTransportTypesID",
                 table: "Activities",
-                column: "lookupTypesID");
+                column: "LookupTransportTypesID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DailyActivities_ActivityID",
@@ -251,14 +282,14 @@ namespace Itinerary_Generator.Migrations
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_preferences_lookupTypesID",
+                name: "IX_preferences_LookupTransportTypeID",
                 table: "preferences",
-                column: "lookupTypesID");
+                column: "LookupTransportTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transports_lookupTypesID",
+                name: "IX_Transports_LookupTransportTypeID",
                 table: "Transports",
-                column: "lookupTypesID");
+                column: "LookupTransportTypeID");
         }
 
         /// <inheritdoc />
@@ -269,6 +300,12 @@ namespace Itinerary_Generator.Migrations
 
             migrationBuilder.DropTable(
                 name: "DailyTransports");
+
+            migrationBuilder.DropTable(
+                name: "lookupActivitityTypes");
+
+            migrationBuilder.DropTable(
+                name: "lookupDestinations");
 
             migrationBuilder.DropTable(
                 name: "preferences");
@@ -289,7 +326,7 @@ namespace Itinerary_Generator.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "LookupTypes");
+                name: "lookupTransportTypes");
         }
     }
 }

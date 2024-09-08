@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string Location { get; set; }
         public int Type { get; set; }
-        public LookupTypes LookupTypes { get; set; }
+        public LookupTransportType LookupTransportTypes { get; set; }
 
     }
 }
